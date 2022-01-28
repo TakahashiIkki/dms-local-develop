@@ -5,6 +5,7 @@ services:
     environment:
       POSTGRES_USER: ikki
       POSTGRES_PASSWORD: pass%word
+      POSTGRES_DB: pg_dms
       POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
     ports:
       - "5432:5432"
@@ -12,6 +13,7 @@ services:
       - dms-dev
     volumes:
       - dms-pg-data:/var/lib/postgresql/data
+      - ./postgresql/init.d:/docker-entrypoint-initdb.d
     container_name: dms-postgres
 
   mysql:
