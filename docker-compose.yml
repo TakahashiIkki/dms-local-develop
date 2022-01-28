@@ -1,0 +1,23 @@
+version: "3"
+services:
+  # DBサーバ
+  postgres:
+    image: postgres:14
+    environment:
+      POSTGRES_USER: ikki
+      POSTGRES_PASSWORD: pass%word
+      POSTGRES_INITDB_ARGS: "--encoding=UTF-8 --locale=C"
+    ports:
+      - "5432:5432"
+    networks:
+      - dms-dev
+    volumes:
+      - dms-pg-data:/var/lib/postgresql/data
+    container_name: dms-postgres
+
+volumes:
+  dms-pg-data:
+
+networks:
+  dms-dev:
+    external: true
