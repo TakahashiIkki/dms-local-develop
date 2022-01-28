@@ -20,7 +20,7 @@ network:
 
 .PHONY: clean clean-postgres clean-server
 
-clean: down clean-network clean-postgres
+clean: down clean-network clean-postgres clean-mysql
 
 clean-network:
 	-docker network rm dms-dev
@@ -28,3 +28,6 @@ clean-network:
 
 clean-postgres:
 	-docker volume rm dms-local-development_dms-pg-data
+
+clean-mysql:
+	-docker volume rm dms-local-development_dms-ms-data

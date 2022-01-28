@@ -1,6 +1,5 @@
 version: "3"
 services:
-  # DBサーバ
   postgres:
     image: postgres:14
     environment:
@@ -15,8 +14,23 @@ services:
       - dms-pg-data:/var/lib/postgresql/data
     container_name: dms-postgres
 
+  mysql:
+    image: mysql:8.0
+    volumes:
+      - dms-ms-data:/var/lib/mysql
+      - ./mysql/init.d:/docker-entrypoint-initdb.d
+    ports:
+      - "3306:3306"
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: ms_dms
+    networks:
+      - dms-dev
+    container_name: dms-mysql
+
 volumes:
   dms-pg-data:
+  dms-ms-data:
 
 networks:
   dms-dev:
