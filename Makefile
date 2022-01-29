@@ -14,7 +14,7 @@ down: ## down docker containers
 setup: network
 
 network:
-	@docker network create dms-dev > .network
+	@docker network create dms-dev > network
 
 ### clean系 ###
 
@@ -24,7 +24,7 @@ clean: down clean-network clean-postgres clean-mysql
 
 clean-network:
 	-docker network rm dms-dev
-	-rm .network
+	-rm network
 
 clean-postgres:
 	-docker volume rm dms-local-development_dms-pg-data
