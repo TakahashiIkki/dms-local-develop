@@ -21,6 +21,7 @@ services:
     volumes:
       - dms-ms-data:/var/lib/mysql
       - ./mysql/init.d:/docker-entrypoint-initdb.d
+      - ./mysql/custom.conf:/etc/mysql/conf.d/custom.conf
     ports:
       - "3306:3306"
     environment:
