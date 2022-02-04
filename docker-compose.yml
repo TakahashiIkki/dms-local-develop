@@ -32,34 +32,40 @@ services:
     container_name: dms-mysql
 
   zookeeper:
-    image: debezium/zookeeper:1.9
+    image: debezium/zookeeper:1.8
     ports:
       - 2181:2181
       - 2888:2888
       - 3888:3888
+    networks:
+      - dms-dev
 
   kafka:
-    image: debezium/kafka:1.9
+    image: debezium/kafka:1.8
     ports:
       - 9092:9092
     links:
       - zookeeper
     environment:
       - ZOOKEEPER_CONNECT=zookeeper:2181
+    networks:
+      - dms-dev
 
   connect:
-    image: debezium/connect:1.9
+    image: debezium/connect:1.8
     ports:
       - 8083:8083
     links:
       - kafka
       - mysql
     environment:
-      - BOOTSTRAP_SERVERS=kafka:9092
       - GROUP_ID=1
+      - BOOTSTRAP_SERVERS=kafka:9092
       - CONFIG_STORAGE_TOPIC=my_connect_configs
       - OFFSET_STORAGE_TOPIC=my_connect_offsets
       - STATUS_STORAGE_TOPIC=my_connect_statuses
+    networks:
+      - dms-dev
 
 volumes:
   dms-pg-data:
