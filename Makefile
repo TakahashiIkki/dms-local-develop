@@ -1,7 +1,3 @@
-SERVER_PATH = bclone-server
-SERVER_REPOSITORY = server
-FRONT_PATH = bclone-front
-
 .PHONY: up
 up: setup ## up docker containers
 	docker-compose up -d
