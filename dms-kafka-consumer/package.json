@@ -10,6 +10,8 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
+    "@types/kafka-node": "^3.0.0",
+    "kafka-node": "^5.0.0",
     "ts-node": "^10.5.0",
     "typescript": "^4.5.5"
   }
