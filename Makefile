@@ -16,7 +16,7 @@ network:
 
 .PHONY: clean clean-postgres clean-server
 
-clean: down clean-network clean-postgres clean-mysql
+clean: down clean-network clean-postgres clean-mysql clean-kafka clean-zookeeper
 
 clean-network:
 	-docker network rm dms-dev
@@ -27,3 +27,10 @@ clean-postgres:
 
 clean-mysql:
 	-docker volume rm dms-local-development_dms-ms-data
+
+clean-kafka:
+	-docker volume rm dms-local-development_dms-kafka-data
+
+clean-zookeeper:
+	-docker volume rm dms-local-development_dms-zookeeper-data
+	-docker volume rm dms-local-development_dms-zookeeper-txns

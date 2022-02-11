@@ -37,6 +37,9 @@ services:
       - 2181:2181
       - 2888:2888
       - 3888:3888
+    volumes:
+      - dms-zookeeper-data:/zookeeper/data
+      - dms-zookeeper-txns:/zookeeper/txns
     networks:
       - dms-dev
 
@@ -44,10 +47,18 @@ services:
     image: debezium/kafka:1.8
     ports:
       - 9092:9092
+      - 29092:29092
     links:
       - zookeeper
     environment:
       - ZOOKEEPER_CONNECT=zookeeper:2181
+      - KAFKA_LISTENERS=FROM_DOCKER_NETWORK://0.0.0.0:9092,FROM_HOST://0.0.0.0:29092
+      - KAFKA_ADVERTISED_LISTENERS=FROM_DOCKER_NETWORK://kafka:9092,FROM_HOST://localhost:29092
+      - KAFKA_LISTENER_SECURITY_PROTOCOL_MAP=PLAINTEXT:PLAINTEXT,FROM_DOCKER_NETWORK:PLAINTEXT,FROM_HOST:PLAINTEXT
+      - KAFKA_INTER_BROKER_LISTENER_NAME=FROM_DOCKER_NETWORK
+      - KAFKA_AUTO_CREATE_TOPICS_ENABLE=true
+    volumes:
+      - dms-kafka-data:/kafka/data
     networks:
       - dms-dev
     container_name: dms-local-kafka
@@ -71,6 +82,9 @@ services:
 volumes:
   dms-pg-data:
   dms-ms-data:
+  dms-kafka-data:
+  dms-zookeeper-data:
+  dms-zookeeper-txns:
 
 networks:
   dms-dev:

@@ -1,7 +1,7 @@
 import kafka from "kafka-node";
 
 const client = new kafka.KafkaClient({
-  kafkaHost: "kafka:9092",
+  kafkaHost: "127.0.0.1:29092",
   connectTimeout: 3000,
   requestTimeout: 3000,
 });

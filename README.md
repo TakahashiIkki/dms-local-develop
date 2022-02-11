@@ -70,11 +70,7 @@ $ docker-compose exec kafka /kafka/bin/kafka-console-consumer.sh \
 - もう片方(Topic の Watch をしていない方)のコンソールで以下を入力して、MySQL の user テーブルにデータを Insert します
 
 ```
-$ docker-compose exec mysql bash
-
-# mysql -u root -proot ms_dms
-
-mysql> INSERT INTO user (name, delete_flag) VALUES ('sample_user1', 0);
+$ docker-compose exec mysql mysql -u root -proot ms_dms -e "INSERT INTO user (name, delete_flag) VALUES ('sample_user1', 0);"
 ```
 
 ### Docker の終了
