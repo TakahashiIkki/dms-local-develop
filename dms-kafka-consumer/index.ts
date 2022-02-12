@@ -1,23 +1,29 @@
-import kafka from "kafka-node";
+import { Kafka } from "kafkajs";
 
-const client = new kafka.KafkaClient({
-  kafkaHost: "127.0.0.1:29092",
-  connectTimeout: 3000,
-  requestTimeout: 3000,
+const kafka = new Kafka({
+  clientId: "dock-host-app",
+  brokers: ["127.0.0.1:29092"],
 });
 
-const consumer = new kafka.Consumer(
-  client,
-  [{ topic: "dms-local.ms_dms.user" }],
-  {
-    autoCommit: true,
-    fromOffset: true,
-    groupId: "consumer1",
-  }
-);
+const consumer = kafka.consumer({ groupId: "consumer1" });
+const run = async () => {
+  await consumer.connect();
+  await consumer.subscribe({
+    topic: "dms-local.ms_dms.user",
+    fromBeginning: true,
+  });
 
-consumer.on("message", function (message) {
-  console.log(message);
-});
+  await consumer.run({
+    eachMessage: async ({ topic, partition, message }) => {
+      console.log("Received: ", {
+        partition,
+        offset: message.offset,
+        value: message.value.toString(),
+      });
+    },
+  });
+};
 
 console.log("ready.");
+
+run().catch(console.error);
