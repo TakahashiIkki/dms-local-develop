@@ -10,12 +10,12 @@ datasource db {
 model member {
   userId     Int      @id @map("user_id")
   name       String   @db.VarChar(25)
-  createdAt  DateTime @db.Timestamptz(6) @map("created_at")
+  createdAt  DateTime @db.Timestamptz(6) @map("created_at") @default(now())
   user       user     @relation(fields: [userId], references: [id], onDelete: NoAction, onUpdate: NoAction, map: "member_fk_user_id")
 }
 
 model user {
   id         Int      @id @default(autoincrement())
-  createdAt  DateTime @db.Timestamptz(6) @map("created_at")
+  createdAt  DateTime @db.Timestamptz(6) @map("created_at") @default(now())
   member     member?
 }
