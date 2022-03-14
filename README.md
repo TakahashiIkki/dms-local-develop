@@ -91,7 +91,27 @@ $ npm run start
 
 ```
 $ cd /path/to/dms-local-develop
-$ docker-compose
+$ docker-compose exec postgres psql -U ikki pg_dms
+```
+
+- PostgreSQL 内
+
+```
+pg_dms=# SELECT * FROM member;
+
+ user_id |     name     |          created_at
+---------+--------------+-------------------------------
+       1 | sample_user1 | 2022-03-14 00:06:00.096674+00
+(1 row)
+```
+
+```
+pg_dms=# SELECT * FROM "user";
+
+ id |          created_at
+----+-------------------------------
+  1 | 2022-03-14 00:06:00.096674+00
+(1 row)
 ```
 
 ## Docker の終了
@@ -99,11 +119,19 @@ $ docker-compose
 ### コンテナ自体を終了
 
 ```
+
 $ make down
+
 ```
 
 ### コンテナ・ボリューム・ネットワーク 含めてすべて削除
 
 ```
+
 $ make clean
+
+```
+
+```
+
 ```
