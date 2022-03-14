@@ -73,6 +73,27 @@ $ docker-compose exec kafka /kafka/bin/kafka-console-consumer.sh \
 $ docker-compose exec mysql mysql -u root -proot ms_dms -e "INSERT INTO user (name, delete_flag) VALUES ('sample_user1', 0);"
 ```
 
+---
+
+## Kafka JS で PostgreSQL にデータを持ってくる方法
+
+### セットアップ
+
+README.md に従ってください
+
+### 実行
+
+```
+$ npm run start
+```
+
+### 確認
+
+```
+$ cd /path/to/dms-local-develop
+$ docker-compose
+```
+
 ## Docker の終了
 
 ### コンテナ自体を終了
