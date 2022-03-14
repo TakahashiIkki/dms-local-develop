@@ -37,24 +37,29 @@ const run = async () => {
       if (!before) {
         // リファクタリング先のテーブルに以降
         await prisma.$transaction([
-          prisma.$executeRawUnsafe(
-            `INSERT INTO "user" (id, created_at) VALUES ($1, current_timestamp)`,
-            after.id
-          ),
-          prisma.$executeRawUnsafe(
-            `INSERT INTO member (user_id, name, created_at) VALUES ($1, $2, current_timestamp)`,
-            after.id,
-            after.name
-          ),
+          prisma.user.create({
+            data: {
+              id: after.id,
+            },
+          }),
+          prisma.member.create({
+            data: {
+              userId: after.id,
+              name: after.name,
+            },
+          }),
         ]);
       } else {
         // リファクタリング先のテーブルに以降
         await prisma.$transaction([
-          prisma.$executeRawUnsafe(
-            `UPDATE member SET name = $1 WHERE user_id = $2`,
-            after.name,
-            after.id
-          ),
+          prisma.member.update({
+            data: {
+              name: after.name,
+            },
+            where: {
+              userId: after.id,
+            },
+          }),
         ]);
       }
 
